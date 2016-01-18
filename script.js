@@ -17,8 +17,8 @@ function init() {
 		{ alert("dead webGL; RIP"); }
 
 
-	var vs = grep_shader(gl, "shader-vs");
-	var fs = grep_shader(gl, "shader-fs");
+	var vs = grep_shader(gl, "ast/frag.glsl", "frag");
+	var fs = grep_shader(gl, "ast/vert.glsl", "vert");
 	prog = gl.createProgram();
 	gl.attachShader(prog, vs);
 	gl.attachShader(prog, fs);

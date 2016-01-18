@@ -30,23 +30,18 @@ function check_distence(p1, p2) {
 	return Math.sqrt(Math.pow(2, p1.x - p2.x) + (2, p1.y - p2.y));
 }
 
-function grep_shader(gl, id) {
-	var shad_raw = document.getElementById(id);
-	var shad_pass = "";
-	var k = shad_raw.firstChild;
-	while (k) {
-		if (k.nodeType == 3) {
-			shad_pass += k.textContent;
-		}
-		k = k.nextSibling;
-	}
+function grep_shader(gl, url, id) {
+	var shad_http = new XMLHttpRequest();
+	shad_http.open("GET", url, false);
+	shad_http.send(null);
+	var shad_pass = shad_http.responseText;
 
 	var shad_shad = null;
-	if (shad_raw.type == "x-shader/x-vertex")
-		{ shad_shad = gl.createShader(gl.VERTEX_SHADER); }
-	else if (shad_raw.type == "x-shader/x-fragment")
-		{ shad_shad = gl.createShader(gl.FRAGMENT_SHADER); }
-	else { alert("w/e you just put in me it was not a shader"); }
+	if (id == "frag") {
+		shad_shad = gl.createShader(gl.FRAGMENT_SHADER);
+	} else if (id == "vert") {
+		shad_shad = gl.createShader(gl.VERTEX_SHADER);
+	}
 
 	gl.shaderSource(shad_shad, shad_pass);
 	gl.compileShader(shad_shad);
